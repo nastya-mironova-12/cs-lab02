@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -28,8 +29,8 @@ void find_minmax(const vector<double>& numbers, double& min_values, double& max_
 }
 
 // РАСЧЁТ КОЛЛИЧЕСТВА ЧИСЕЛ В СТОЛБЦАХ ГИСТОГРАММЫ
-vector<double> make_histogram(size_t bin_values, const vector<double>& numbers) {
-    vector<double> result(bin_values);  // Массив/вектор столбцов
+vector<size_t> make_histogram(size_t bin_values, const vector<double>& numbers) {
+    vector<size_t> result(bin_values);  // Массив/вектор столбцов
     double numbers_min, numbers_max;
     find_minmax(numbers, numbers_min, numbers_max); // Вызов функции поиска наибольшего и наименьшего значения
     for (double number : numbers) { // Перебор вхех значений в массиве
@@ -42,38 +43,52 @@ vector<double> make_histogram(size_t bin_values, const vector<double>& numbers) 
     return result;
 }
 
-// ОТОБРАЖЕНИЕ ГИСТОГРАММЫ
-void show_histogram_text(const vector<double>& bins) {
-    const size_t SCREEN_WIDTH = 80;
-    const size_t MAX_ASTERISK = SCREEN_WIDTH - 3 - 1;
+// ВЫВОД ЗАГОЛОВКА SVG
+void svg_begin(double width, double height) {
+    cout << "<?xml version='1.0' encoding='UTF-8'?>\n";
+    cout << "<svg ";
+    cout << "width='" << width << "' ";
+    cout << "height='" << height << "' ";
+    cout << "viewBox='0 0 " << width << " " << height << "' ";
+    cout << "xmlns='http://www.w3.org/2000/svg'>\n";
+}
 
-    size_t max_count = 0;
-    for (size_t bin : bins) {   // Поиск наибольшего количества
-        if (bin > max_count) {  // чисел в одной корзине
-            max_count = bin;
-        }
-    }
-    const bool scaling_needed = max_count > MAX_ASTERISK;   // Нужно ли применять масштабирование
+// ВЫВОД ОКОНЧАНИЯ SVG
+void svg_end() {
+    cout << "</svg>\n";
+}
 
+// ФУНКЦИИ ВЫВОДА ЭЛЕМЕНТОВ SVG
+
+//Вывод подписей к столбцам
+void svg_text(double left, double baseline, string text) {
+    cout << "<text x='" << left << "' y='" << baseline << "'>" << text << "</text>" << '\n';
+}
+
+//Вывод прямоугольника в SVG
+void svg_rect(double x, double y, double width, double height, string stroke = "black", string fill = "#F09DEC") {
+    cout << "<rect x='" << x << "' y='" << y << "' width='" << width << "' height='" << height << "' stroke='" << stroke << "' fill='" << fill << "' />" << '\n';
+}
+
+// ГРАФИЧЕСКИЙ ВЫВОД ГИСТОГРАММЫ
+void show_histogram_svg(const vector<size_t>& bins) {
+    const auto IMAGE_WIDTH = 400;
+    const auto IMAGE_HEIGHT = 300;
+    const auto TEXT_LEFT = 20;
+    const auto TEXT_BASELINE = 20;
+    const auto TEXT_WIDTH = 50;
+    const auto BIN_HEIGHT = 30;
+    const auto BLOCK_WIDTH = 10;
+
+    svg_begin(IMAGE_WIDTH, IMAGE_HEIGHT);
+    double top = 0;
     for (size_t bin : bins) {
-        if (bin < 100) {    // Выравнивание
-            cout << ' ';    // подписей
-        }                   // столбцов
-        if (bin < 10) {     // до трёх
-            cout << ' ';    // знакомест
-        }
-        cout << bin << "|";
-
-        size_t height = bin;    // Высота столбца (количество звездочек)
-        if (scaling_needed) {
-            height = MAX_ASTERISK * (static_cast<double>(bin) / max_count);   // Масштабирование
-        }                                                                   // высоты столбца
-
-        for (size_t i = 0; i < height; i++) {
-            cout << '*';    // Вывод (звёздочек) столбца
-        }
-        cout << '\n';
+        const double bin_width = BLOCK_WIDTH * bin;
+        svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin));
+        svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT);
+        top += BIN_HEIGHT;
     }
+    svg_end();
 }
 
 
@@ -91,5 +106,5 @@ int main() {
     const auto bins = make_histogram(bin_count, numbers);   // Вектор количеств чисел в каждой корзине
 
     // ВЫВОД ДАННЫХ
-    show_histogram_text(bins);  // Отображение гистограммы
+    show_histogram_svg(bins);  // Отображение гистограммы
 }
