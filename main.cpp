@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "histogram.h"
 
 using namespace std;
 
@@ -12,20 +13,6 @@ vector<double> input_numbers(size_t number_values) {
         cin >> result[i];   // Ввод значений
     }
     return result;
-}
-
-// ПОИСК МИНИМУМА И МАКСИМУМА
-void find_minmax(const vector<double>& numbers, double& min_values, double& max_values) {
-    min_values = numbers[0];
-    max_values = numbers[0];
-    for (double number : numbers) {
-        if (number < min_values) {
-            min_values = number;
-        }
-        if (number > max_values) {
-            max_values = number;
-        }
-    }
 }
 
 // РАСЧЁТ КОЛЛИЧЕСТВА ЧИСЕЛ В СТОЛБЦАХ ГИСТОГРАММЫ
@@ -41,6 +28,40 @@ vector<size_t> make_histogram(size_t bin_values, const vector<double>& numbers) 
         result[bin]++;    // Увеличение высоты столбца
     }
     return result;
+}
+
+// ОТОБРАЖЕНИЕ ГИСТОГРАММЫ (ввиде звёздочек)
+void show_histogram_text(const vector<double>& bins) {
+    const size_t SCREEN_WIDTH = 80;
+    const size_t MAX_ASTERISK = SCREEN_WIDTH - 3 - 1;
+
+    size_t max_count = 0;
+    for (size_t bin : bins) {   // Поиск наибольшего количества
+        if (bin > max_count) {  // чисел в одной корзине
+            max_count = bin;
+        }
+    }
+    const bool scaling_needed = max_count > MAX_ASTERISK;   // Нужно ли применять масштабирование
+
+    for (size_t bin : bins) {
+        if (bin < 100) {    // Выравнивание
+            cout << ' ';    // подписей
+        }                   // столбцов
+        if (bin < 10) {     // до трёх
+            cout << ' ';    // знакомест
+        }
+        cout << bin << "|";
+
+        size_t height = bin;    // Высота столбца (количество звездочек)
+        if (scaling_needed) {
+            height = MAX_ASTERISK * (static_cast<double>(bin) / max_count);   // Масштабирование
+        }                                                                   // высоты столбца
+
+        for (size_t i = 0; i < height; i++) {
+            cout << '*';    // Вывод (звёздочек) столбца
+        }
+        cout << '\n';
+    }
 }
 
 // ВЫВОД ЗАГОЛОВКА SVG
@@ -60,12 +81,12 @@ void svg_end() {
 
 // ФУНКЦИИ ВЫВОДА ЭЛЕМЕНТОВ SVG
 
-//Вывод подписей к столбцам
+// Вывод подписей к столбцам
 void svg_text(double left, double baseline, string text) {
     cout << "<text x='" << left << "' y='" << baseline << "'>" << text << "</text>" << '\n';
 }
 
-//Вывод прямоугольника в SVG
+// Вывод прямоугольника в SVG
 void svg_rect(double x, double y, double width, double height, string stroke = "black", string fill = "#F09DEC") {
     cout << "<rect x='" << x << "' y='" << y << "' width='" << width << "' height='" << height << "' stroke='" << stroke << "' fill='" << fill << "' />" << '\n';
 }
@@ -118,6 +139,9 @@ int main() {
 	cin >> bin_count;   // Ввод количества корзин (столбцов)
 
     // ОБРАБОТКА ДАННЫХ
+    if (bin_count == 0) {
+        cerr << "Error: you have entered the number of columns = 0.";
+    }
     const auto bins = make_histogram(bin_count, numbers);   // Вектор количеств чисел в каждой корзине
 
     // ВЫВОД ДАННЫХ
