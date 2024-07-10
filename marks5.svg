@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg width='400' height='260' viewBox='0 0 400 260' xmlns='http://www.w3.org/2000/svg'>
+<line x1='20' y1='20' x2='20' y2='259' stroke='black' stroke-dasharray='10 10' />
+<line x1='20' y1='259' x2='99' y2='259' stroke='black' stroke-dasharray='10 10' />
+<line x1='99' y1='259' x2='99' y2='20' stroke='black' stroke-dasharray='10 10' />
+<line x1='99' y1='20' x2='20' y2='20' stroke='black' stroke-dasharray='10 10' />
+<text x='30' y='57'>2</text>
+<rect x='65' y='35' width='20' height='30' stroke='black' fill='#F09DEC' />
+<text x='30' y='87'>1</text>
+<rect x='65' y='65' width='10' height='30' stroke='black' fill='#F09DEC' />
+<text x='30' y='117'>1</text>
+<rect x='65' y='95' width='10' height='30' stroke='black' fill='#F09DEC' />
+<text x='30' y='147'>2</text>
+<rect x='65' y='125' width='20' height='30' stroke='black' fill='#F09DEC' />
+<text x='30' y='177'>1</text>
+<rect x='65' y='155' width='10' height='30' stroke='black' fill='#F09DEC' />
+<text x='30' y='207'>1</text>
+<rect x='65' y='185' width='10' height='30' stroke='black' fill='#F09DEC' />
+<text x='30' y='237'>2</text>
+<rect x='65' y='215' width='20' height='30' stroke='black' fill='#F09DEC' />
+</svg>

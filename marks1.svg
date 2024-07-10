@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg width='400' height='110' viewBox='0 0 400 110' xmlns='http://www.w3.org/2000/svg'>
+<line x1='20' y1='20' x2='20' y2='109' stroke='black' stroke-dasharray='10 10' />
+<line x1='20' y1='109' x2='259' y2='109' stroke='black' stroke-dasharray='10 10' />
+<line x1='259' y1='109' x2='259' y2='20' stroke='black' stroke-dasharray='10 10' />
+<line x1='259' y1='20' x2='20' y2='20' stroke='black' stroke-dasharray='10 10' />
+<text x='30' y='57'>18</text>
+<rect x='65' y='35' width='180' height='30' stroke='black' fill='#F09DEC' />
+<text x='30' y='87'>17</text>
+<rect x='65' y='65' width='170' height='30' stroke='black' fill='#F09DEC' />
+</svg>
