@@ -42,10 +42,41 @@ void test_empty() {
 	assert(max == 0);
 }
 
+void test_little() {
+    size_t width = 50;
+    size_t block = 10;
+    size_t max_values = 20;
+    size_t limit = 30;
+    size_t length = line_length(width, block, max_values, limit);
+    assert(length == 250);
+}
+
+void test_big() {
+    size_t width = 40;
+    size_t block = 10;
+    size_t max_values = 150;
+    size_t limit = 30;
+    size_t length = line_length(width, block, max_values, limit);
+    assert(length == 340);
+}
+
+void test_equal() {
+    size_t width = 150;
+    size_t block = 5;
+    size_t max_values = 30;
+    size_t limit = 30;
+    size_t length = line_length(width, block, max_values, limit);
+    assert(length == 300);
+}
+
 int main() {
     test_positive();
     test_negative();
 	test_identical();
 	test_alone();
 	test_empty();
+
+	test_little();
+	test_big();
+	test_equal();
 }

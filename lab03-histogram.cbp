@@ -33,6 +33,14 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename=".gitignore" />
+		<Unit filename="SVG.cpp" />
+		<Unit filename="SVG.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="histogram.cpp" />
+		<Unit filename="histogram.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
