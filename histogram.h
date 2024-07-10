@@ -5,10 +5,10 @@
 
 using namespace std;
 
-// онхяй лхмхлслю х люйяхлслю
+// оНХЯЙ лхмхлслю х люйяхлслю
 void find_minmax(const vector<double>& numbers, double& min_values, double& max_values);
 
-// Ширина рамки
+// ьХПХМЮ ПЮЛЙХ
 size_t line_length(size_t width, size_t block, size_t max_values, size_t limit);
 
 #endif // HISTOGRAM_H_INCLUDED
